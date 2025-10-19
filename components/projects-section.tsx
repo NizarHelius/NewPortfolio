@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 
 interface Project {
   id: string
@@ -27,9 +29,11 @@ const projects: Project[] = [
       "A modern social media platform built with Next.js and TypeScript, featuring real-time interactions, user authentication, and a responsive design.",
     longDescription:
       "A comprehensive social media platform that enables users to connect, share content, and interact in real-time. Built with modern web technologies, featuring user authentication, profile management, post creation, and real-time notifications. Implements responsive design principles for seamless experience across all devices.",
-    image: "/crovvu-project.jpg",
+  image: "/crovvu-project.png",
     technologies: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Authentication"],
     category: "Full Stack",
+    liveUrl: "https://blhipdn49gvens01j.lite.vusercontent.net/",
+    githubUrl: "https://github.com/NizarHelius/Crovvu-Website",
     featured: true,
   },
   {
@@ -39,9 +43,11 @@ const projects: Project[] = [
       "A recipe sharing and meal planning platform that helps users discover, save, and share their favorite recipes with a beautiful and intuitive interface.",
     longDescription:
       "An elegant recipe sharing platform designed for food enthusiasts. Users can discover new recipes, save their favorites, create meal plans, and share their culinary creations with the community. Features include advanced search filters, ingredient lists, step-by-step instructions, and nutritional information.",
-    image: "/culinary-project.jpg",
+  image: "/culinary-project.png",
     technologies: ["React", "Node.js", "MongoDB", "Express", "CSS"],
     category: "Full Stack",
+    liveUrl: "https://reliable-lily-86b29f.netlify.app/",
+    githubUrl: "https://github.com/NizarHelius/Culinary-Website",
     featured: true,
   },
   {
@@ -51,9 +57,11 @@ const projects: Project[] = [
       "A comprehensive fitness tracking application that helps users monitor their workouts, set goals, and track their progress with detailed analytics.",
     longDescription:
       "A powerful fitness tracking application designed to help users achieve their health and fitness goals. Features include workout logging, progress tracking, goal setting, detailed analytics and charts, exercise library, and personalized workout recommendations. Built with a focus on user experience and data visualization.",
-    image: "/fitflow-project.jpg",
+  image: "/fitflow-project.png",
     technologies: ["React", "TypeScript", "Chart.js", "Firebase", "Material-UI"],
     category: "Frontend",
+    liveUrl: "https://fit-flow-launch.lovable.app/",
+    githubUrl: "https://github.com/NizarHelius/fit-flow-launch",
     featured: false,
   },
   {
@@ -63,9 +71,11 @@ const projects: Project[] = [
       "An e-commerce platform for coffee enthusiasts, featuring product catalog, shopping cart, and secure payment processing.",
     longDescription:
       "A fully-featured e-commerce platform tailored for coffee lovers. Includes product browsing with detailed descriptions, shopping cart functionality, user accounts, order history, secure payment integration, and admin dashboard for inventory management. Designed with a warm, inviting aesthetic that reflects the coffee culture.",
-    image: "/cozy-brew-project.jpg",
+  image: "/cozy-brew-project.png",
     technologies: ["Next.js", "Stripe", "PostgreSQL", "Tailwind CSS", "Prisma"],
     category: "Full Stack",
+    liveUrl: "https://cozy-brew-portal.lovable.app/",
+    githubUrl: "https://github.com/NizarHelius/cozy-brew-portal",
     featured: false,
   },
 ]
@@ -84,25 +94,8 @@ function ProjectCard({ project }: ProjectCardProps) {
           className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="flex gap-2">
-            {project.liveUrl && (
-              <Button size="sm" asChild>
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="w-4 h-4 mr-1" />
-                  Live
-                </a>
-              </Button>
-            )}
-            {project.githubUrl && (
-              <Button size="sm" variant="secondary" asChild>
-                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                  <Github className="w-4 h-4 mr-1" />
-                  Code
-                </a>
-              </Button>
-            )}
-          </div>
+        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none">
+          {/* purely decorative overlay; actions moved to persistent buttons below */}
         </div>
         {project.featured && (
           <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">Featured</Badge>
@@ -119,12 +112,41 @@ function ProjectCard({ project }: ProjectCardProps) {
 
         <p className="text-muted-foreground text-sm mb-4 text-pretty">{project.description}</p>
 
-        <div className="flex flex-wrap gap-2">
-          {project.technologies.map((tech) => (
-            <Badge key={tech} variant="secondary" className="text-xs">
-              {tech}
-            </Badge>
-          ))}
+        {/* Persistent action buttons as plain anchors styled like buttons for reliable clicks */}
+        <div className="mt-4 flex flex-wrap gap-3">
+          {project.liveUrl ? (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ size: "sm" }))}
+            >
+              <ExternalLink className="w-4 h-4 mr-1" />
+              View Demo
+            </a>
+          ) : (
+            <span className={cn(buttonVariants({ size: "sm" })) + " opacity-50 cursor-not-allowed"}>
+              <ExternalLink className="w-4 h-4 mr-1" />
+              View Demo
+            </span>
+          )}
+
+          {project.githubUrl ? (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ size: "sm", variant: "secondary" }))}
+            >
+              <Github className="w-4 h-4 mr-1" />
+              View Code
+            </a>
+          ) : (
+            <span className={cn(buttonVariants({ size: "sm", variant: "secondary" })) + " opacity-50 cursor-not-allowed"}>
+              <Github className="w-4 h-4 mr-1" />
+              View Code
+            </span>
+          )}
         </div>
       </CardContent>
     </Card>
