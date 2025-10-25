@@ -37,6 +37,20 @@ const projects: Project[] = [
     featured: true,
   },
   {
+    id: "5",
+    title: "CryptoScope",
+    description:
+      "A REST API-backed cryptocurrency tracking website with React and Next.js frontend and a Node.js/Express REST API providing market data.",
+    longDescription:
+      "CryptoScope is a full-stack project that provides real-time and historical cryptocurrency market data via a REST API built in Node.js/Express and a React + Next.js frontend that consumes the API, displays charts and market metrics, and supports search and comparison features.",
+    image: "/cryptoscope-project.svg",
+    technologies: ["React", "Next.js", "Node.js", "Express", "REST API"],
+    category: "Full Stack",
+    liveUrl: "https://cryptoscope-omega.vercel.app/",
+    githubUrl: "https://github.com/NizarHelius/CryptoCurrency-REST-API",
+    featured: false,
+  },
+  {
     id: "2",
     title: "Culinary",
     description:
